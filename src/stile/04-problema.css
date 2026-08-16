@@ -1,0 +1,134 @@
+/* =================================================================
+   Problema: scalinata di conseguenze + citazione sul passaparola.
+   ================================================================= */
+
+.sezione--problema { background: var(--crema-2); }
+.sezione--problema .intestazione__titolo--misurato {
+  font-size: clamp(1.7rem, 3.4vw, 3rem);
+  font-weight: 300;
+  line-height: 1.06;
+  max-width: 24ch;
+}
+.sezione--problema .intestazione__titolo--misurato .riga:last-child .riga__testo {
+  font-weight: 200;
+  color: var(--petrolio);
+}
+
+.intestazione--larga {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
+}
+.intestazione--larga .intestazione__indice { grid-column: 1 / -1; }
+@media (max-width: 62rem) {
+  .intestazione--larga { grid-template-columns: 1fr; align-items: start; }
+}
+
+/* --- la scalinata ------------------------------------------------- */
+.conseguenze {
+  margin-top: clamp(3rem, 6vw, 5.5rem);
+  counter-reset: conseguenza;
+}
+.conseguenza {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(4.5rem, auto) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+  padding-block: clamp(1.75rem, 3.2vw, 2.75rem);
+  border-top: 1px solid var(--filo);
+  margin-inline-start: calc(var(--posa, 0) * clamp(0rem, 4.5vw, 5.5rem));
+  transition: background-color 0.3s ease;
+}
+.conseguenza:last-child { border-bottom: 1px solid var(--filo); }
+
+.conseguenza__numero {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 0.78;
+  color: rgba(15, 92, 94, 0.28);
+}
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .conseguenza__numero {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--petrolio);
+  }
+}
+
+.conseguenza__corpo { max-width: 46ch; }
+.conseguenza__titolo {
+  font-size: var(--t-piccolo);
+  font-weight: 600;
+  color: var(--petrolio-scuro);
+  letter-spacing: -0.012em;
+  line-height: 1.18;
+}
+.conseguenza__testo {
+  margin-top: 0.55rem;
+  color: var(--inchiostro-tenue);
+  line-height: 1.6;
+}
+
+/* filo giallo che segue la scalinata */
+.conseguenza__scia {
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--giallo);
+  transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.conseguenza[data-visto] .conseguenza__scia { width: clamp(2.5rem, 8vw, 7rem); }
+
+/* --- citazione ---------------------------------------------------- */
+.citazione {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding-block: clamp(2rem, 4.5vw, 3.75rem);
+  border-block: 1px solid var(--petrolio-scuro);
+}
+.citazione blockquote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 4.4vw, 3.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  max-width: 24ch;
+}
+.citazione__prima {
+  display: block;
+  color: var(--inchiostro-tenue);
+}
+.citazione__dopo {
+  display: block;
+  margin-top: 0.18em;
+  margin-inline-start: clamp(0rem, 6vw, 5rem);
+  color: var(--petrolio-scuro);
+  font-style: italic;
+  position: relative;
+  width: fit-content;
+}
+.citazione__dopo::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0.06em;
+  height: clamp(6px, 0.9vw, 12px);
+  background: var(--giallo);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+.citazione[data-visto] .citazione__dopo::after { transform: scaleX(1); }
+.citazione blockquote { position: relative; z-index: 0; }
+
+@media (max-width: 48rem) {
+  .conseguenza {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin-inline-start: 0;
+    padding-inline-start: calc(var(--posa, 0) * 0.9rem);
+  }
+  .conseguenza__numero { font-size: 2.1rem; line-height: 1; }
+}

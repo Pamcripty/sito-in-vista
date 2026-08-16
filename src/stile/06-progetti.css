@@ -1,0 +1,392 @@
+/* =================================================================
+   Progetti: ogni caso ha impianto, colore e composizione propri.
+   ================================================================= */
+
+.sezione--progetti { padding-bottom: 0; }
+.sezione--progetti > .gabbia { padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+.progetti { display: block; }
+
+.progetto__interno {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(1.75rem, 3.4vw, 3.5rem) var(--vuoto);
+  padding-block: clamp(3.25rem, 6.5vw, 6.5rem);
+  align-items: start;
+}
+
+/* --- elementi comuni --------------------------------------------- */
+.progetto__numero {
+  display: block;
+  font-size: var(--t-etichetta);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--petrolio);
+  margin-bottom: 0.85rem;
+}
+.progetto__categoria {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--petrolio);
+  margin-bottom: 0.9rem;
+}
+.progetto__nome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.45em;
+  font-size: clamp(2.4rem, 6.4vw, 5.4rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  color: var(--petrolio-scuro);
+}
+.progetto__nome-secondario {
+  font-weight: 200;
+  font-size: 0.44em;
+  letter-spacing: -0.01em;
+  color: var(--petrolio);
+}
+.progetto__concetto {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.1vw, 1.95rem);
+  line-height: 1.22;
+  font-style: italic;
+  color: var(--petrolio);
+  max-width: 24ch;
+}
+.progetto__descrizione {
+  font-size: clamp(1.02rem, 1.15vw, 1.16rem);
+  line-height: 1.58;
+  color: var(--antracite);
+  max-width: 48ch;
+}
+
+.progetto__dicitura {
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--filo-forte);
+  border-left-width: 4px;
+  border-left-color: var(--giallo);
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  color: var(--petrolio-scuro);
+  max-width: 46ch;
+}
+.progetto__dicitura-segno {
+  width: 0.5rem; height: 0.5rem;
+  background: var(--giallo);
+  flex: none;
+  translate: 0 -0.1rem;
+}
+
+/* --- scheda del caso --------------------------------------------- */
+.scheda {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--filo);
+}
+.scheda__voce {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.42fr) minmax(0, 1fr);
+  gap: 0.4rem clamp(1rem, 2.5vw, 2.25rem);
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--filo);
+}
+.scheda__voce:last-child { border-bottom: 0; }
+.scheda__etichetta {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--petrolio);
+  padding-top: 0.22rem;
+}
+.scheda__testo {
+  color: var(--inchiostro-tenue);
+  line-height: 1.55;
+  font-size: 0.98rem;
+}
+
+/* --- piede del progetto ------------------------------------------ */
+.progetto__pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--filo);
+}
+.progetto__stato {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--petrolio);
+}
+.progetto__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 500;
+  color: var(--petrolio-scuro);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.2rem;
+  transition: gap 0.22s ease, color 0.22s ease;
+}
+.progetto__link:hover { gap: 1.1rem; color: var(--petrolio); }
+.progetto__link-freccia {
+  width: 0.7rem; height: 0.7rem;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  rotate: 45deg;
+  flex: none;
+}
+
+/* =================================================================
+   Variante 01 — INSEGNA: blocco scuro, visuale a destra
+   ================================================================= */
+.progetto--insegna {
+  background: var(--petrolio-scuro);
+  background-image: var(--grana);
+  background-blend-mode: overlay;
+  color: var(--crema);
+  --fuoco: var(--giallo);
+}
+.progetto--insegna .progetto__numero { color: var(--giallo); }
+.progetto--insegna .progetto__categoria,
+.progetto--insegna .progetto__stato { color: var(--crema-tenue); }
+.progetto--insegna .progetto__nome { color: var(--crema); }
+.progetto--insegna .progetto__nome-secondario { color: var(--giallo); }
+.progetto--insegna .progetto__concetto { color: var(--giallo); }
+.progetto--insegna .progetto__descrizione { color: var(--crema-tenue); }
+.progetto--insegna .scheda,
+.progetto--insegna .scheda__voce,
+.progetto--insegna .progetto__pie { border-color: var(--filo-chiaro); }
+.progetto--insegna .scheda__etichetta { color: var(--crema-tenue); }
+.progetto--insegna .scheda__testo { color: var(--crema-tenue); }
+.progetto--insegna .progetto__link { color: var(--crema); }
+.progetto--insegna .progetto__link:hover { color: var(--giallo); }
+
+.progetto--insegna .progetto__testa { grid-column: 1 / span 7; }
+.progetto--insegna .progetto__visuale { grid-column: 9 / -1; grid-row: 1 / span 2; align-self: center; }
+.progetto--insegna .progetto__corpo { grid-column: 1 / span 7; }
+.progetto--insegna .progetto__pie { grid-column: 1 / -1; }
+
+/* diagramma di percorso */
+.visuale__didascalia {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--crema-tenue);
+  margin-bottom: 1.5rem;
+}
+.flusso { position: relative; display: grid; gap: clamp(1.75rem, 3.6vw, 3.25rem); }
+.flusso::before {
+  content: '';
+  position: absolute;
+  inset-block: 0.55rem;
+  inset-inline-start: 0.36rem;
+  width: 1px;
+  background: var(--filo-chiaro);
+}
+.flusso__tappa {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  font-size: clamp(1.15rem, 1.8vw, 1.65rem);
+  color: var(--crema-tenue);
+}
+.flusso__punto {
+  width: 0.78rem; height: 0.78rem;
+  border: 1px solid var(--crema-tenue);
+  flex: none;
+  background: var(--petrolio-scuro);
+  rotate: 45deg;
+}
+.flusso__tappa--meta { color: var(--giallo); font-weight: 500; }
+.flusso__tappa--meta .flusso__punto {
+  background: var(--giallo);
+  border-color: var(--giallo);
+}
+.flusso__tappa--meta::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: -0.55rem;
+  inset-block: -0.55rem;
+  width: 2px;
+  background: var(--giallo);
+}
+
+/* =================================================================
+   Variante 02 — VETRINA: campitura gialla a sinistra
+   ================================================================= */
+.progetto--vetrina { background: var(--crema); }
+.progetto--vetrina .progetto__visuale { grid-column: 1 / span 5; grid-row: 1 / span 3; align-self: stretch; height: 100%; }
+.progetto--vetrina .progetto__testa { grid-column: 7 / -1; }
+.progetto--vetrina .progetto__corpo { grid-column: 7 / -1; }
+.progetto--vetrina .progetto__pie { grid-column: 7 / -1; }
+
+.visuale--marca {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(30rem, 78vh);
+  height: 100%;
+  background: var(--giallo);
+  color: var(--petrolio-scuro);
+  overflow: hidden;
+}
+.marca__parola {
+  position: absolute;
+  inset-block-start: clamp(1rem, 2.5vw, 2rem);
+  inset-inline-start: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: rgba(8, 59, 61, 0.14);
+}
+.marca__scatola {
+  width: min(62%, 15rem);
+  height: auto;
+  color: var(--petrolio-scuro);
+  translate: 0 6%;
+}
+.marca__raggi {
+  position: absolute;
+  inset-block-end: clamp(1rem, 2.5vw, 2rem);
+  inset-inline-end: clamp(1rem, 2.5vw, 2rem);
+  color: var(--petrolio-scuro);
+}
+
+/* =================================================================
+   Variante 03 — CANTIERE: concept a disegno tecnico
+   ================================================================= */
+.progetto--cantiere { background: var(--crema-2); }
+.progetto--cantiere .progetto__testa { grid-column: 1 / span 9; }
+.progetto--cantiere .progetto__concetto { max-width: 32ch; }
+.progetto--cantiere .progetto__visuale { grid-column: 1 / -1; }
+.progetto--cantiere .progetto__corpo { grid-column: 1 / span 7; }
+.progetto--cantiere .progetto__pie {
+  grid-column: 9 / -1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.progetto--cantiere .progetto__stato {
+  border: 1px dashed var(--filo-forte);
+  padding: 0.5rem 0.85rem;
+  line-height: 1.3;
+}
+
+.visuale--schema { border-top: 1px solid var(--filo); padding-top: 1.5rem; }
+.visuale--schema .visuale__didascalia { color: var(--petrolio); }
+.schema {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.6vw, 1.5rem);
+  max-width: 58rem;
+}
+.schema__voce { display: grid; gap: 0.7rem; }
+.schema__telaio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  aspect-ratio: 3 / 4;
+  padding: 0.55rem;
+  border: 1px dashed rgba(8, 59, 61, 0.4);
+  background: rgba(248, 242, 230, 0.55);
+}
+.schema__barra {
+  display: block;
+  flex: none;
+  height: 8px;
+  background: rgba(8, 59, 61, 0.42);
+}
+.schema__blocco {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  border: 1px solid rgba(8, 59, 61, 0.22);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(15, 92, 94, 0.22) 0 1px,
+    transparent 1px 7px
+  );
+}
+.schema__riga { display: block; flex: none; height: 4px; background: rgba(15, 92, 94, 0.26); }
+.schema__riga--corta { width: 58%; }
+.schema__coppia { display: flex; flex: none; gap: 0.4rem; height: 20%; margin-top: 0.15rem; }
+.schema__coppia b { flex: 1; border: 1px solid rgba(8, 59, 61, 0.18); background: rgba(15, 92, 94, 0.07); }
+.schema__voce:nth-child(3) .schema__blocco {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(242, 184, 75, 0.85) 0 2px,
+    transparent 2px 7px
+  );
+  border-color: rgba(242, 184, 75, 0.9);
+}
+.schema__voce:last-child .schema__telaio { border-color: var(--giallo); border-style: solid; }
+.schema__voce:last-child .schema__coppia b:last-child { background: var(--giallo); border-color: var(--giallo); }
+
+.schema__nome {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: var(--petrolio-scuro);
+  letter-spacing: -0.005em;
+}
+.schema__ordine {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--petrolio);
+}
+
+/* =================================================================
+   Adattamenti
+   ================================================================= */
+@media (max-width: 62rem) {
+  .progetto__interno { grid-template-columns: 1fr; gap: 1.75rem; }
+  .progetto--insegna .progetto__testa,
+  .progetto--insegna .progetto__visuale,
+  .progetto--insegna .progetto__corpo,
+  .progetto--insegna .progetto__pie,
+  .progetto--vetrina .progetto__testa,
+  .progetto--vetrina .progetto__visuale,
+  .progetto--vetrina .progetto__corpo,
+  .progetto--vetrina .progetto__pie,
+  .progetto--cantiere .progetto__testa,
+  .progetto--cantiere .progetto__visuale,
+  .progetto--cantiere .progetto__corpo,
+  .progetto--cantiere .progetto__pie {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+  .progetto--insegna .progetto__visuale { order: 3; }
+  .progetto--vetrina .progetto__visuale { align-self: start; height: auto; }
+  .progetto--vetrina .visuale--marca {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+  }
+  .progetto--cantiere .progetto__pie { flex-direction: row; align-items: center; }
+  .schema { grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); }
+}
+
+@media (max-width: 48rem) {
+  .scheda__voce { grid-template-columns: 1fr; }
+  .schema { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; }
+  .schema__telaio { padding: 0.4rem; gap: 0.3rem; }
+  .schema__barra { height: 6px; }
+  .schema__nome { font-size: 0.78rem; gap: 0.3rem; }
+  .schema__ordine { font-size: 0.6rem; }
+  .progetto__pie { flex-direction: column; align-items: flex-start; }
+  .progetto--cantiere .progetto__pie { flex-direction: column; align-items: flex-start; }
+}

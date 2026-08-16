@@ -1,0 +1,54 @@
+/* =================================================================
+   Animazioni: poche, brevi, al servizio della lettura.
+   Tutte disattivate da prefers-reduced-motion (vedi fondamenta).
+   ================================================================= */
+
+/* --- apertura: il titolo entra a fuoco --------------------------- */
+.apertura__titolo .riga__testo {
+  animation: metti-a-fuoco 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.apertura__titolo .riga:nth-child(2) .riga__testo { animation-delay: 0.12s; }
+.apertura__sovratitolo { animation: sali 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.apertura__base { animation: sali 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
+.fascia-evidenze { animation: sali 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both; }
+
+@keyframes metti-a-fuoco {
+  from { opacity: 0; transform: translateY(0.42em); filter: blur(9px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes sali {
+  from { opacity: 0; transform: translateY(1rem); }
+  to { opacity: 1; transform: none; }
+}
+
+/* il mirino si chiude attorno al titolo */
+.mirino--apertura i {
+  opacity: 0;
+  animation: chiudi-mirino 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+.mirino--apertura i:nth-child(1) { --dx: -1.4rem; --dy: -1.4rem; }
+.mirino--apertura i:nth-child(2) { --dx: 1.4rem; --dy: -1.4rem; }
+.mirino--apertura i:nth-child(3) { --dx: -1.4rem; --dy: 1.4rem; }
+.mirino--apertura i:nth-child(4) { --dx: 1.4rem; --dy: 1.4rem; }
+
+@keyframes chiudi-mirino {
+  from { opacity: 0; translate: var(--dx) var(--dy); }
+  to { opacity: 1; translate: 0 0; }
+}
+
+/* --- comparse in scorrimento -------------------------------------
+   Nascoste solo se lo script è attivo: senza JavaScript la pagina
+   resta interamente leggibile.                                    */
+[data-script] [data-comparsa] {
+  opacity: 0;
+  transform: translateY(1.4rem);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--ritardo, 0s);
+}
+[data-script] [data-comparsa][data-visto] { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-script] [data-comparsa] { opacity: 1; transform: none; }
+  .mirino--apertura i { opacity: 1; }
+}
