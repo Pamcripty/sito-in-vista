@@ -62,7 +62,9 @@ npm run serve      # serve dist/ senza ricostruire
 A ogni push su `main`, GitHub costruisce il sito e lo manda online da solo:
 `.github/workflows/pubblica.yml`. Non c'è niente da caricare a mano.
 
-**Da fare una volta sola**, su GitHub:
+Il workflow prova ad attivare Pages da solo. Se non ci riesce (capita su
+alcuni repository o piani), il passaggio fallisce con un messaggio chiaro e
+allora va attivato a mano, una volta sola:
 **Settings → Pages → Build and deployment → Source: “GitHub Actions”**.
 
 L'indirizzo di Pages entra da solo nei metadata, nella sitemap e
