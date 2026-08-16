@@ -33,6 +33,8 @@ for (const larghezza of LARGHEZZE) {
   pagina.on('console', (m) => m.type() === 'error' && errori.push(m.text()));
 
   await pagina.goto(BASE, { waitUntil: 'networkidle' });
+  // senza i font pronti le misure di larghezza non sono affidabili
+  await pagina.evaluate(() => document.fonts.ready);
   await pagina.evaluate(() =>
     document.querySelectorAll('[data-comparsa]').forEach((e) => e.setAttribute('data-visto', ''))
   );
@@ -74,6 +76,7 @@ console.log('\nCONTRASTO — testo contro il proprio sfondo (WCAG AA)');
 {
   const pagina = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   await pagina.goto(BASE, { waitUntil: 'networkidle' });
+  await pagina.evaluate(() => document.fonts.ready);
   const scarsi = await pagina.evaluate(() => {
     const canale = (c) => {
       const v = c / 255;

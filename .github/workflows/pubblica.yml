@@ -33,16 +33,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Scarica il repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Prepara Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
 
       - name: Prepara GitHub Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # prova ad attivare Pages da sola, con sorgente "GitHub Actions".
+          # Se non ha i permessi per farlo, il passaggio fallisce con un
+          # messaggio chiaro: allora va attivata a mano da
+          # Settings → Pages → Source: "GitHub Actions".
+          enablement: true
 
       - name: Costruisci il sito
         # l'indirizzo pubblico di Pages entra nei metadata, nella sitemap

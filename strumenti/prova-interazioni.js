@@ -11,6 +11,26 @@ let problemi = 0;
 const segnala = (t) => { problemi += 1; console.log(`  ✗ ${t}`); };
 const ok = (t) => console.log(`  ✓ ${t}`);
 
+/* I font arrivano dopo il primo disegno: se si misura prima che siano
+   pronti, un riassetto successivo sposta tutto. */
+async function attendiFont(pagina) {
+  await pagina.evaluate(() => document.fonts.ready);
+}
+
+/* Lo scorrimento morbido dura quanto vuole: su una macchina lenta molto
+   di più. Invece di aspettare un tempo fisso, aspettiamo che la pagina
+   si fermi davvero — due letture uguali di seguito. */
+async function attendiFermata(pagina, tentativi = 80) {
+  let precedente = null;
+  for (let i = 0; i < tentativi; i += 1) {
+    const y = await pagina.evaluate(() => Math.round(window.scrollY));
+    if (y === precedente) return y;
+    precedente = y;
+    await pagina.waitForTimeout(120);
+  }
+  return precedente;
+}
+
 const browser = await apriBrowser();
 await mkdir(FUORI, { recursive: true });
 
@@ -18,6 +38,7 @@ await mkdir(FUORI, { recursive: true });
 {
   const pagina = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await pagina.goto(BASE, { waitUntil: 'networkidle' });
+  await attendiFont(pagina);
 
   const tasto = pagina.locator('[data-menu]');
   await tasto.click();
@@ -36,16 +57,16 @@ await mkdir(FUORI, { recursive: true });
   // una voce porta alla sezione giusta e richiude il menu
   await tasto.click();
   await pagina.locator('#navigazione a[href="#pacchetti"]').click();
-  await pagina.waitForTimeout(1200);
+  await attendiFermata(pagina);
   const chiuso = !(await pagina.locator('#navigazione').isVisible());
-  const posizione = await pagina.evaluate(() => {
-    const s = document.getElementById('pacchetti').getBoundingClientRect().top;
-    return Math.round(s);
-  });
+  const posizione = await pagina.evaluate(() =>
+    Math.round(document.getElementById('pacchetti').getBoundingClientRect().top)
+  );
   if (chiuso) ok('scegliendo una voce il menu si richiude');
   else segnala('il menu resta aperto dopo la scelta');
-  if (Math.abs(posizione) < 130) ok(`l’ancora #pacchetti arriva a ${posizione}px dal bordo alto`);
-  else segnala(`l’ancora #pacchetti si ferma a ${posizione}px dal bordo alto`);
+  // scroll-padding-top tiene la sezione sotto la testata: 4,5rem + 1,5rem = 96px
+  if (Math.abs(posizione - 96) <= 8) ok(`l’ancora #pacchetti si ferma a ${posizione}px, sotto la testata`);
+  else segnala(`l’ancora #pacchetti si ferma a ${posizione}px invece di 96px`);
 
   // la barra WhatsApp compare dopo l'apertura
   const barra = await pagina.locator('[data-fisso]').getAttribute('data-visibile');
@@ -60,14 +81,16 @@ await mkdir(FUORI, { recursive: true });
 {
   const pagina = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await pagina.goto(BASE, { waitUntil: 'networkidle' });
+  await attendiFont(pagina);
   await pagina.waitForTimeout(300);
 
   const primaDelloScorrimento = await pagina.locator('[data-fisso]').getAttribute('data-visibile');
   if (primaDelloScorrimento === null) ok('sulla copertina la linguetta resta nascosta');
   else segnala('la linguetta è già visibile sulla copertina');
 
-  await pagina.evaluate(() => window.scrollTo(0, 2000));
-  await pagina.waitForTimeout(600);
+  await pagina.evaluate(() => window.scrollTo({ top: 2000, behavior: 'instant' }));
+  await attendiFermata(pagina);
+  await pagina.waitForTimeout(400);
   const dopo = await pagina.locator('[data-fisso]').getAttribute('data-visibile');
   if (dopo !== null) ok('scorrendo la linguetta WhatsApp compare');
   else segnala('la linguetta non compare scorrendo');
