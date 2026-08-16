@@ -1,0 +1,334 @@
+/* =================================================================
+   Pacchetti: un listino, non tre schede uguali.
+   Il terzo esce dalla riga, sopra e sotto: è la scelta consigliata.
+   ================================================================= */
+
+.sezione--pacchetti { overflow: clip; }
+
+.listino {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.18fr);
+  border-top: 1px solid var(--petrolio-scuro);
+}
+
+.pacchetto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+  padding: clamp(1.75rem, 2.6vw, 2.5rem) clamp(1.25rem, 2.2vw, 2.25rem) clamp(1.5rem, 2.4vw, 2.25rem) 0;
+  border-inline-end: 1px solid var(--filo);
+}
+.pacchetto:not(:where(:first-child)) { padding-inline-start: clamp(1.25rem, 2.2vw, 2.25rem); }
+
+/* --- il pacchetto consigliato ------------------------------------ */
+.pacchetto--consigliato {
+  --fuoco: var(--giallo);
+  background: var(--petrolio-scuro);
+  background-image: var(--grana);
+  background-blend-mode: overlay;
+  color: var(--crema);
+  border-inline-end: 0;
+  z-index: 2;
+  margin-block: calc(-1 * clamp(1.5rem, 3vw, 3.25rem)) calc(-1 * clamp(1.5rem, 3vw, 3.25rem));
+  padding: clamp(3rem, 4.6vw, 4.5rem) clamp(1.5rem, 2.6vw, 2.75rem);
+  box-shadow: 0 40px 60px -50px rgba(8, 59, 61, 0.9);
+}
+.mirino--pacchetto { inset: 0.9rem; color: var(--giallo); }
+.mirino--pacchetto i { width: 14px; height: 14px; border-width: 1.5px; }
+
+.pacchetto__etichetta {
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 0;
+  background: var(--giallo);
+  color: var(--petrolio-scuro);
+  font-size: var(--t-etichetta);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.1rem;
+}
+
+/* --- testa -------------------------------------------------------- */
+.pacchetto__nome {
+  font-size: clamp(1.3rem, 1.9vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  line-height: 1.1;
+  color: var(--petrolio-scuro);
+}
+.pacchetto--consigliato .pacchetto__nome { color: var(--crema); font-weight: 700; }
+
+.pacchetto__sottotitolo {
+  margin-top: 0.3rem;
+  font-size: 0.92rem;
+  color: var(--inchiostro-tenue);
+}
+.pacchetto--consigliato .pacchetto__sottotitolo { color: var(--crema-tenue); }
+
+.pacchetto__prezzo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+  color: var(--petrolio-scuro);
+  line-height: 0.9;
+}
+.pacchetto__cifra {
+  font-size: clamp(2.9rem, 5vw, 4.4rem);
+  font-weight: 200;
+  letter-spacing: -0.05em;
+}
+.pacchetto__valuta { font-size: clamp(1.1rem, 1.6vw, 1.5rem); font-weight: 300; }
+.pacchetto--consigliato .pacchetto__prezzo { color: var(--giallo); }
+.pacchetto--consigliato .pacchetto__cifra { font-weight: 300; }
+
+.pacchetto__promessa {
+  margin-top: 0.85rem;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.4vw, 1.28rem);
+  line-height: 1.25;
+  color: var(--petrolio);
+}
+.pacchetto--consigliato .pacchetto__promessa { color: var(--crema); }
+.pacchetto__virgolette { color: var(--petrolio); font-style: normal; }
+.pacchetto--consigliato .pacchetto__virgolette { color: var(--giallo); }
+
+/* --- corpo -------------------------------------------------------- */
+.pacchetto__corpo { flex: 1; }
+.pacchetto__titoletto {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--petrolio);
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--filo);
+  margin-bottom: 0.9rem;
+}
+.pacchetto--consigliato .pacchetto__titoletto {
+  color: var(--giallo);
+  border-color: var(--filo-chiaro);
+}
+
+.pacchetto__voci { display: grid; gap: 0.65rem; }
+.pacchetto__voci li {
+  display: grid;
+  grid-template-columns: 0.85rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: start;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: var(--antracite);
+}
+.pacchetto--consigliato .pacchetto__voci li { color: var(--crema); }
+
+/* spunta disegnata: due tratti, nessun cerchio */
+.pacchetto__spunta {
+  position: relative;
+  width: 0.85rem;
+  height: 0.85rem;
+  margin-top: 0.28rem;
+}
+.pacchetto__spunta::before,
+.pacchetto__spunta::after {
+  content: '';
+  position: absolute;
+  background: var(--petrolio);
+  inset-block-start: 55%;
+}
+.pacchetto__spunta::before { inset-inline-start: 4%; width: 38%; height: 1.5px; rotate: 45deg; transform-origin: left; }
+.pacchetto__spunta::after { inset-inline-start: 32%; width: 74%; height: 1.5px; rotate: -47deg; transform-origin: left; }
+.pacchetto--consigliato .pacchetto__spunta::before,
+.pacchetto--consigliato .pacchetto__spunta::after { background: var(--giallo); }
+
+/* --- piede -------------------------------------------------------- */
+.pacchetto__pie { display: grid; gap: 1rem; }
+.pacchetto__esclusi {
+  font-size: 0.84rem;
+  letter-spacing: 0.02em;
+  color: var(--inchiostro-tenue);
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--filo);
+}
+.pacchetto--consigliato .pacchetto__esclusi {
+  color: var(--crema-tenue);
+  border-color: var(--filo-chiaro);
+}
+.pacchetto__azione { justify-content: space-between; }
+
+/* =================================================================
+   Il conto: quanto costerebbero le stesse voci separate
+   ================================================================= */
+.valore {
+  margin-top: clamp(4.5rem, 9vw, 8rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  padding-top: clamp(2rem, 4vw, 3.25rem);
+  border-top: 1px solid var(--filo);
+}
+.valore__indice {
+  font-size: var(--t-etichetta);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--petrolio);
+  margin-bottom: 0.9rem;
+}
+.valore__titolo {
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 300;
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  color: var(--petrolio-scuro);
+  max-width: 16ch;
+}
+.valore__premessa {
+  margin-top: 1.1rem;
+  color: var(--inchiostro-tenue);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+.valore__nota {
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--inchiostro-tenue);
+  max-width: 52ch;
+}
+
+.conto { align-self: start; }
+.conto__riga {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding-block: 0.75rem;
+}
+.conto__voce {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  color: var(--antracite);
+}
+.conto__voce::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px dotted var(--filo-forte);
+  translate: 0 -0.28em;
+  min-width: 1.5rem;
+}
+.conto__cifra {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--petrolio-scuro);
+  font-weight: 500;
+}
+
+.conto__riga--somma {
+  margin-top: 0.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--petrolio-scuro);
+  font-size: clamp(1.05rem, 1.4vw, 1.22rem);
+}
+.conto__riga--somma .conto__voce { font-weight: 500; color: var(--petrolio-scuro); }
+.conto__riga--somma .conto__cifra { font-weight: 300; }
+
+.conto__riga--prezzo {
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--petrolio-scuro);
+  color: var(--crema);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+}
+.conto__riga--prezzo .conto__voce { color: var(--crema); font-weight: 500; }
+.conto__riga--prezzo .conto__voce::after { border-bottom-color: var(--filo-chiaro); }
+.conto__riga--prezzo .conto__cifra {
+  color: var(--giallo);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* =================================================================
+   Servizi extra
+   ================================================================= */
+.extra {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--petrolio-scuro);
+}
+.extra__voce {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1.5fr) auto;
+  gap: 0.4rem clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  padding-block: clamp(1.1rem, 2.2vw, 1.75rem);
+  border-bottom: 1px solid var(--filo);
+}
+.extra__ordine {
+  font-size: var(--t-etichetta);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--petrolio);
+}
+.extra__nome {
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  color: var(--petrolio-scuro);
+}
+.extra__testo { color: var(--inchiostro-tenue); line-height: 1.55; font-size: 0.98rem; }
+.extra__prezzo {
+  order: 3;
+  justify-self: end;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 500;
+  color: var(--petrolio);
+  white-space: nowrap;
+}
+.extra__nota {
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  color: var(--inchiostro-tenue);
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+}
+.extra__nota::before {
+  content: '';
+  width: 1.5rem; height: 1px;
+  background: var(--filo-forte);
+  flex: none;
+  translate: 0 -0.3em;
+}
+
+/* =================================================================
+   Adattamenti
+   ================================================================= */
+@media (max-width: 68rem) {
+  .listino { grid-template-columns: 1fr; border-top: 0; }
+  .pacchetto {
+    padding: 1.75rem 0;
+    border-inline-end: 0;
+    border-top: 1px solid var(--petrolio-scuro);
+  }
+  .pacchetto:not(:where(:first-child)) { padding-inline-start: 0; }
+  .pacchetto--consigliato {
+    margin-block: 1.5rem;
+    padding: clamp(2.5rem, 6vw, 3.25rem) clamp(1.25rem, 4vw, 2rem);
+    border-top: 0;
+  }
+  .valore { grid-template-columns: 1fr; }
+  .valore__nota { grid-column: 1; margin-top: 0; }
+}
+
+@media (max-width: 55rem) {
+  .extra__voce {
+    grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+  }
+  .extra__nome { grid-column: 2; }
+  .extra__prezzo { grid-column: 3; grid-row: 1; }
+  .extra__testo { grid-column: 2 / -1; }
+}

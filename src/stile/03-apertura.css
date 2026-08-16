@@ -1,0 +1,179 @@
+/* =================================================================
+   Apertura: la copertina del sito.
+   Titolo a tutta larghezza dentro un mirino, base asimmetrica,
+   fascia di evidenze appoggiata al fondo dello schermo.
+   ================================================================= */
+
+.apertura {
+  position: relative;
+  min-height: calc(100svh - var(--altezza-testata));
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+  isolation: isolate;
+}
+
+/* gabbia tipografica visibile: sei colonne sottili */
+.apertura__reticolo {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  translate: -50% 0;
+  width: min(100%, var(--misura));
+  padding-inline: var(--margine);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--filo-tenue) 0 1px,
+    transparent 1px calc(100% / 6)
+  );
+  background-origin: content-box;
+  background-clip: content-box;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.apertura__interno {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-block: clamp(1.5rem, 4vw, 3rem);
+}
+
+.apertura__riga-alta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-bottom: clamp(0.75rem, 1.6vw, 1.25rem);
+  border-bottom: 1px solid var(--filo-tenue);
+}
+.apertura__destinatari {
+  font-size: var(--t-etichetta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--inchiostro-tenue);
+  text-align: end;
+}
+
+.apertura__sovratitolo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: var(--t-etichetta);
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--petrolio);
+}
+/* sul fondo crema il giallo non si legge: il segno passa al petrolio */
+.raggi--sovratitolo { flex: none; color: var(--petrolio); }
+
+/* --- il campo del titolo ---------------------------------------- */
+.apertura__campo {
+  position: relative;
+  padding-block: clamp(0.6rem, 1.6vw, 1.4rem);
+}
+.mirino--apertura { inset: 0 -0.9rem; }
+
+.apertura__titolo {
+  font-size: var(--t-gigante);
+  font-weight: 200;
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  color: var(--petrolio-scuro);
+}
+.apertura__titolo .riga__testo--forte {
+  font-weight: 700;
+  color: var(--petrolio);
+}
+/* la seconda riga rientra: la voce che "risponde" */
+.apertura__titolo .riga:last-child { padding-inline-start: 0.06em; }
+
+/* --- base: testo a sinistra, azioni a destra --------------------- */
+.apertura__base {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--vuoto);
+  align-items: end;
+  padding-top: clamp(1.75rem, 3.5vw, 3rem);
+  border-top: 1px solid var(--filo);
+}
+.apertura__testo {
+  grid-column: 1 / span 6;
+  max-width: 46ch;
+  font-size: clamp(1.05rem, 1.25vw, 1.28rem);
+  line-height: 1.55;
+  color: var(--antracite);
+}
+.apertura__azioni {
+  grid-column: 8 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: flex-end;
+}
+
+/* --- fascia evidenze --------------------------------------------- */
+.fascia-evidenze { border-top: 1px solid var(--filo); }
+.evidenze {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.evidenza {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1rem, 2vw, 2rem) clamp(1rem, 1.8vw, 1.5rem) 0;
+  border-inline-end: 1px solid var(--filo);
+}
+.evidenza:last-child { border-inline-end: 0; }
+.evidenza:not(:first-child) { padding-inline-start: clamp(1rem, 2vw, 2rem); }
+
+.evidenza__indice {
+  font-size: var(--t-etichetta);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--petrolio);
+  padding-top: 0.3rem;
+}
+.evidenza__corpo { display: grid; gap: 0.1rem; }
+.evidenza__titolo {
+  font-size: clamp(0.98rem, 1.15vw, 1.12rem);
+  font-weight: 500;
+  color: var(--petrolio-scuro);
+  letter-spacing: -0.005em;
+}
+.evidenza__nota {
+  font-size: 0.86rem;
+  color: var(--inchiostro-tenue);
+  line-height: 1.4;
+}
+
+/* --- adattamenti -------------------------------------------------- */
+@media (max-width: 62rem) {
+  .apertura__base { grid-template-columns: 1fr; align-items: start; gap: 1.75rem; }
+  .apertura__testo { grid-column: 1 / -1; }
+  .apertura__azioni { grid-column: 1 / -1; justify-content: flex-start; }
+}
+
+@media (max-width: 48rem) {
+  .apertura { min-height: 0; padding-bottom: 0; }
+  .apertura__reticolo { display: none; }
+  .mirino--apertura { inset: 0; }
+  .apertura__riga-alta { flex-direction: column; align-items: flex-start; gap: 0.6rem; }
+  .apertura__destinatari { text-align: start; letter-spacing: 0.1em; }
+  .apertura__titolo { line-height: 0.94; letter-spacing: -0.035em; }
+  .evidenze { grid-template-columns: 1fr; }
+  .evidenza {
+    padding: 0.95rem 0;
+    border-inline-end: 0;
+  }
+  .evidenza:not(:first-child) {
+    padding-inline-start: 0;
+    border-top: 1px solid var(--filo-tenue);
+  }
+  .apertura__azioni { flex-direction: column; align-items: stretch; }
+  .apertura__azioni .azione { justify-content: space-between; }
+}

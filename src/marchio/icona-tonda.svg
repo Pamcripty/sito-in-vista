@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" role="img" aria-label="Sito in Vista">
+  <rect width="1080" height="1080" rx="240" fill="#0F5C5E"/>
+  <rect x="205" y="240" width="560" height="560" rx="90" fill="#F8F2E6"/>
+  <g fill="#0F5C5E">
+    <circle cx="283" cy="320" r="22"/>
+    <circle cx="357" cy="320" r="22"/>
+    <circle cx="431" cy="320" r="22"/>
+  </g>
+  <path fill="#0F5C5E" d="M303 390h348a40 40 0 0 1 40 40v40l-60 80 60 80v40a40 40 0 0 1-40 40H303a40 40 0 0 1-40-40V430a40 40 0 0 1 40-40Z"/>
+  <g fill="#F8F2E6">
+    <rect x="313" y="440" width="125" height="170" rx="22"/>
+    <rect x="478" y="450" width="145" height="34" rx="17"/>
+    <rect x="478" y="516" width="112" height="34" rx="17"/>
+    <rect x="478" y="582" width="145" height="34" rx="17"/>
+  </g>
+  <g stroke="#F2B84B" stroke-width="34" stroke-linecap="round">
+    <path d="M818 378 893 331"/>
+    <path d="M825 520H945"/>
+    <path d="M818 662 893 709"/>
+  </g>
+</svg>

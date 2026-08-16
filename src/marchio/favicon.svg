@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" role="img" aria-label="Sito in Vista">
+  <!-- Versione semplificata dell'icona, leggibile a 16 px. -->
+  <rect width="1080" height="1080" rx="230" fill="#0F5C5E"/>
+  <rect x="150" y="230" width="620" height="620" rx="100" fill="#F8F2E6"/>
+  <path fill="#0F5C5E" d="M255 400h390a45 45 0 0 1 45 45v45l-75 90 75 90v45a45 45 0 0 1-45 45H255a45 45 0 0 1-45-45V445a45 45 0 0 1 45-45Z"/>
+  <g stroke="#F2B84B" stroke-width="58" stroke-linecap="round">
+    <path d="M840 400 925 348"/>
+    <path d="M848 540H975"/>
+    <path d="M840 680 925 732"/>
+  </g>
+</svg>

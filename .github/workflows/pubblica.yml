@@ -1,0 +1,75 @@
+# =====================================================================
+# Pubblicazione automatica su GitHub Pages.
+#
+# A ogni push su main: GitHub costruisce il sito e manda online dist/.
+# Non serve installare nulla — build.js usa solo Node.
+#
+# Da fare una volta sola su GitHub:
+#   Settings → Pages → Build and deployment → Source: "GitHub Actions"
+# =====================================================================
+
+name: Pubblica il sito
+
+on:
+  push:
+    branches: [main]
+  # permette di ripubblicare a mano da Actions → Run workflow
+  workflow_dispatch:
+
+# permessi necessari alla pubblicazione su Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# una pubblicazione alla volta; le nuove non interrompono quella in corso
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  costruisci:
+    name: Costruisci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v5
+
+      - name: Prepara Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Prepara GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # prova ad attivare Pages da sola, con sorgente "GitHub Actions".
+          # Se non ha i permessi per farlo, il passaggio fallisce con un
+          # messaggio chiaro: allora va attivata a mano da
+          # Settings → Pages → Source: "GitHub Actions".
+          enablement: true
+
+      - name: Costruisci il sito
+        # l'indirizzo pubblico di Pages entra nei metadata, nella sitemap
+        # e nell'anteprima social senza modificare i file del progetto
+        env:
+          DOMINIO: ${{ steps.pages.outputs.base_url }}
+        run: node build.js
+
+      - name: Prepara il pacchetto da pubblicare
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  pubblica:
+    name: Pubblica
+    needs: costruisci
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblicazione.outputs.page_url }}
+    steps:
+      - name: Manda online
+        id: pubblicazione
+        uses: actions/deploy-pages@v4

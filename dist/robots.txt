@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sitoinvista.it/sitemap.xml
