@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* Cattura una schermata per ogni sezione, così si controllano una a una. */
 
-import { chromium } from 'playwright';
+import { apriBrowser } from './browser.js';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -9,7 +9,6 @@ const BASE = process.env.BASE || 'http://localhost:4173/';
 const FUORI = process.env.FUORI || '/tmp/sezioni';
 const LARGHEZZA = Number(process.env.L || 1440);
 const ALTEZZA = Number(process.env.H || 900);
-const ESEGUIBILE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
 const BERSAGLI = process.env.SEL
   ? process.env.SEL.split(',')
@@ -28,7 +27,7 @@ const BERSAGLI = process.env.SEL
       '#contatto',
     ];
 
-const browser = await chromium.launch({ executablePath: ESEGUIBILE });
+const browser = await apriBrowser();
 const pagina = await browser.newPage({ viewport: { width: LARGHEZZA, height: ALTEZZA } });
 await mkdir(FUORI, { recursive: true });
 

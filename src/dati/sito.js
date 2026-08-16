@@ -14,8 +14,11 @@ export const NUMERO_WHATSAPP = '';
 /* Messaggio già pronto nella chat quando il cliente scrive. */
 export const MESSAGGIO_WHATSAPP = 'Ciao, vorrei capire quale sito è più adatto alla mia attività.';
 
-/* Indirizzo pubblico del sito: serve per i metadata e per l'anteprima social. */
-export const DOMINIO = 'https://sitoinvista.it';
+/* Indirizzo pubblico del sito: serve per i metadata, la sitemap e
+   l'anteprima social. Quando il sito viene pubblicato da GitHub Actions
+   la variabile d'ambiente DOMINIO ha la precedenza, così l'indirizzo di
+   GitHub Pages entra da solo senza dover modificare questo file. */
+export const DOMINIO = process.env.DOMINIO || 'https://sitoinvista.it';
 
 export const marchio = {
   nome: 'Sito in Vista',

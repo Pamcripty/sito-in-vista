@@ -1,0 +1,60 @@
+# =====================================================================
+# Controlli automatici sulle pull request e sui push a main.
+#
+# Rilancia le stesse verifiche di `npm run verifica`: nessuno scorrimento
+# orizzontale da 320 a 1920 px, contrasto WCAG AA, messa a fuoco visibile,
+# domande usabili da tastiera, ancore e link, comportamento senza
+# JavaScript, errori in console.
+#
+# Gira separato dalla pubblicazione: se un controllo fallisce lo vedi
+# nella pull request, ma il sito già online non viene toccato.
+# =====================================================================
+
+name: Controlli
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verifica:
+    name: Verifica il sito costruito
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il repository
+        uses: actions/checkout@v4
+
+      - name: Prepara Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Installa gli strumenti di controllo
+        run: npm ci
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+
+      - name: Installa Chromium
+        run: npx playwright install --with-deps chromium
+
+      # costruzione, avvio e controlli in un passaggio solo:
+      # così il server resta vivo per tutta la durata delle prove
+      - name: Costruisci, avvia e controlla
+        run: |
+          node build.js
+          node serve.js &
+          SERVER=$!
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:4173/ > /dev/null && break
+            sleep 1
+          done
+          node strumenti/verifica.js
+          node strumenti/prova-interazioni.js
+          kill $SERVER

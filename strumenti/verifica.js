@@ -10,10 +10,9 @@
    - nessun errore in console
    ================================================================= */
 
-import { chromium } from 'playwright';
+import { apriBrowser } from './browser.js';
 
 const BASE = process.env.BASE || 'http://localhost:4173/';
-const ESEGUIBILE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const LARGHEZZE = [320, 360, 390, 430, 540, 768, 820, 1024, 1180, 1280, 1440, 1680, 1920];
 
 let problemi = 0;
@@ -23,7 +22,7 @@ const segnala = (t) => {
 };
 const ok = (t) => console.log(`  ✓ ${t}`);
 
-const browser = await chromium.launch({ executablePath: ESEGUIBILE });
+const browser = await apriBrowser();
 
 /* ---------------------------------------------------------------- */
 console.log('\nLARGHEZZE — scorrimento orizzontale e sbordamenti');

@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 /* Prova le interazioni vere: menu del telefono, ancore, contatto fisso. */
 
-import { chromium } from 'playwright';
+import { apriBrowser } from './browser.js';
 import { mkdir } from 'node:fs/promises';
 
 const BASE = process.env.BASE || 'http://localhost:4173/';
-const ESEGUIBILE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const FUORI = '/tmp/interazioni';
 
 let problemi = 0;
 const segnala = (t) => { problemi += 1; console.log(`  ✗ ${t}`); };
 const ok = (t) => console.log(`  ✓ ${t}`);
 
-const browser = await chromium.launch({ executablePath: ESEGUIBILE });
+const browser = await apriBrowser();
 await mkdir(FUORI, { recursive: true });
 
 /* --- menu del telefono ------------------------------------------- */

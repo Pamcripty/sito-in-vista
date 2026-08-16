@@ -2,7 +2,7 @@
 /* Cattura le schermate del sito per il controllo visivo.
    Solo strumento di lavoro: non serve per pubblicare. */
 
-import { chromium } from 'playwright';
+import { apriBrowser } from './browser.js';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -18,9 +18,7 @@ const VISTE = [
   { nome: 'telefono-piccolo', larghezza: 320, altezza: 720 },
 ];
 
-/* Il contenitore ha già Chromium installato: lo usiamo direttamente. */
-const ESEGUIBILE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
-const browser = await chromium.launch({ executablePath: ESEGUIBILE });
+const browser = await apriBrowser();
 await mkdir(FUORI, { recursive: true });
 
 for (const v of VISTE) {

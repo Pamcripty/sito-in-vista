@@ -9,16 +9,15 @@
    Va rilanciato solo se cambiano il marchio o i testi dell'anteprima.
    ================================================================= */
 
-import { chromium } from 'playwright';
+import { apriBrowser } from './browser.js';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const QUI = path.dirname(fileURLToPath(import.meta.url));
 const RADICE = path.join(QUI, '..');
-const ESEGUIBILE = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
-const browser = await chromium.launch({ executablePath: ESEGUIBILE });
+const browser = await apriBrowser();
 
 /* --- anteprima social ------------------------------------------- */
 await mkdir(path.join(RADICE, 'src', 'social'), { recursive: true });

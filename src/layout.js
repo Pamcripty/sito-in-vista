@@ -63,10 +63,10 @@ export function documento({ corpo, css, js, versione }) {
   <meta name="theme-color" content="#083B3D" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="${esc(url)}/">
 
-  <link rel="icon" href="/marchio/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/marchio/favicon-32.png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/marchio/icona-180.png">
-  <link rel="manifest" href="/manifesto.webmanifest">
+  <link rel="icon" href="marchio/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="marchio/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="marchio/icona-180.png">
+  <link rel="manifest" href="manifesto.webmanifest">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${esc(marchio.nome)}">
@@ -83,8 +83,8 @@ export function documento({ corpo, css, js, versione }) {
   <meta name="twitter:description" content="${esc(meta.descrizione)}">
   <meta name="twitter:image" content="${esc(immagine)}">
 
-  <link rel="preload" href="/font/jost-200-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/${esc(css)}">
+  <link rel="preload" href="font/jost-200-700-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="${esc(css)}">
 
   <!-- Le comparse in scorrimento si attivano solo se lo script può gestirle. -->
   <script>if('IntersectionObserver' in window)document.documentElement.setAttribute('data-script','')</script>
@@ -93,7 +93,7 @@ export function documento({ corpo, css, js, versione }) {
 </head>
 <body>
 ${corpo}
-<script src="/${esc(js)}" defer></script>
+<script src="${esc(js)}" defer></script>
 <!-- Sito in Vista — build ${esc(versione)} -->
 </body>
 </html>

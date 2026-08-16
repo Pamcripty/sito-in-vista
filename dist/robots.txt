@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sitoinvista.it/sitemap.xml
+Sitemap: https://pamcripty.github.io/sito-in-vista/sitemap.xml

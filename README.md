@@ -57,17 +57,35 @@ npm run serve      # serve dist/ senza ricostruire
 
 ## 3. Pubblicare
 
-Il sito finito è tutto dentro **`dist/`**. Sono file statici: si pubblicano
-ovunque, senza database e senza configurazioni.
+### Automaticamente su GitHub Pages (già configurato)
+
+A ogni push su `main`, GitHub costruisce il sito e lo manda online da solo:
+`.github/workflows/pubblica.yml`. Non c'è niente da caricare a mano.
+
+**Da fare una volta sola**, su GitHub:
+**Settings → Pages → Build and deployment → Source: “GitHub Actions”**.
+
+L'indirizzo di Pages entra da solo nei metadata, nella sitemap e
+nell'anteprima social: il workflow passa la variabile `DOMINIO` alla
+costruzione, quindi non serve modificare nessun file.
+
+Quando collegherai un dominio tuo (per esempio `sitoinvista.it`), aggiungilo
+in **Settings → Pages → Custom domain**: da lì in poi Pages userà quello e
+i metadata lo seguiranno.
+
+### Altrove
+
+Il sito finito è tutto dentro **`dist/`**. Sono file statici, con percorsi
+relativi: funzionano sia sulla radice di un dominio sia in una sottocartella.
 
 - **Netlify / Vercel / Cloudflare Pages** — comando di build `npm run build`,
   cartella da pubblicare `dist`.
-- **GitHub Pages** — pubblica il contenuto di `dist/` sul branch delle pagine.
 - **Hosting tradizionale (FTP)** — carica il *contenuto* di `dist/` nella
   cartella pubblica (`public_html`, `www` o simile).
 
-Prima di pubblicare, aggiorna `DOMINIO` in `src/dati/sito.js` con l'indirizzo
-vero: da lì derivano `canonical`, Open Graph, `sitemap.xml` e `robots.txt`.
+In questi casi aggiorna `DOMINIO` in `src/dati/sito.js` con l'indirizzo vero:
+da lì derivano `canonical`, Open Graph, `sitemap.xml` e `robots.txt`. In
+alternativa passalo alla costruzione: `DOMINIO=https://esempio.it npm run build`.
 
 ---
 
@@ -171,6 +189,11 @@ node strumenti/sezioni.js             # una schermata per sezione → /tmp/sezio
 
 Questi strumenti usano Playwright, che è l'unica dipendenza di sviluppo
 (`npm install`). Per costruire e pubblicare non serve.
+
+Gli stessi controlli girano da soli su GitHub a ogni pull request e a ogni
+push su `main` (`.github/workflows/controlli.yml`). Il workflow è separato da
+quello di pubblicazione: se un controllo fallisce lo vedi segnalato nella pull
+request, ma il sito già online non viene toccato.
 
 ---
 
